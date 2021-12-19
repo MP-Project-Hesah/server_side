@@ -54,14 +54,16 @@
 <hr> 
     
 <br>
-<hr>
 
+														       
+# Inroductions
+														       
 ## Learn the concepts used in this project
 * [ Node.js Backend Architecture ](https://nodejs.org/en/docs/)
 * [Setup Basic Server](https://blog.vanila.io/setup-basic-server-with-express-framework-37b2ec749a6d)
 * [Implement JSON Web Token (JWT) Authentication](https://afteracademy.com/blog/implement-json-web-token-jwt-authentication-using-access-token-and-refresh-token)
 * [Authentication vs Authorization](https://afteracademy.com/blog/authentication-vs-authorization)														       
-## Development tools & Methodology
+## Development tools 
 - Trello
 - Wireframe.cc
 - Creately														       
@@ -73,16 +75,34 @@
 ## Database:
 
 - MongoDB, with Mongoose API
-
-
-
-[Read More](https://docs.mongodb.com/drivers/node/current/)	
 														       
-# Routes
+## Dependencies
+You can install all dependencies by running `npm install` in the project directory.
 
+| Dependency                                           | Usage                                                              |
+| ---------------------------------------------------- | ------------------------------------------------------------------ |
+| [axios](https://npm.com/package/body-parser)   | POST body parsing middleware. Adds body object to incoming request |
+| [bcrypt](https://npmjs.com/package/compression) | Response compression middleware                                    |
+| [express](https://npmjs.com/package/express)         | Express REST API framework                                         |
+| [cors](https://npm.com/package/cors)                 | CORS middleware to set CORS policy                                 |
+| [morgan](https://npmjs.com/package/morgan)           | HTTP request logger                                                |
+| [mongoose](https://npmjs.com/package/winston)         | General purpose logger for the application                         |
+| [passport](https://npmjs.com/package/nyc)                 | Code Coverage tool                                                 |
+| [passport-jwt](https://npmjs.com/package/standard)       | Linting and styling tool.                                          |
+| [react-dom](https://npmjs.com/package/chai)               | Assertion Library                                                  |
+| [react-router-dom](https://npmjs.com/package/chai-http)     | Middleware for chai to test http endpoints                         |
+
+<hr>
+														       
+<div align="center">
+  <h1>Routes </h1>	
+</div>
+<hr>
+<br> 
+		   
 ## Test Route
-This is the route that you can use to check if the API is running properly.                                                                                                        
-                                                                                                                               
+This is the route that you can use to check if the API is running properly.      
+                                                                                                                          
 ## Home
 
  **Returns a set of of podcasts and authors based on the categories selected by the user.**
@@ -191,6 +211,98 @@ This is the route that you can use to check if the API is running properly.
 | /user/{id}/subscriptions | `GET`  | -      | -          | **Code:** 200 - OK<br />**Content:** <br />`{`<br /> `subscriptions:` [[Podcast](#subscriptions)],<br />`}` | <br /> 404 NOT FOUND <br> **Content:** `{ error: <A Message with a description of the Error> }` |
 
 <br />
+
+<table>
+<tr>
+            <td style="background-color:#deeaf6; border-bottom:2px solid #9cc2e5; border-left:2px solid #9cc2e5; border-right:2px solid #9cc2e5; border-top:none; vertical-align:top; width:104px;">
+                <p><span style="font-family: Calibri, sans-serif;"><strong>/register</strong></span></p>
+            </td>
+            <td style="background-color:#deeaf6; border-bottom:2px solid #9cc2e5; border-left:none; border-right:2px solid #9cc2e5; border-top:none; vertical-align:top; width:66px;">
+                <p><span style="font-family: Calibri, sans-serif;">POST</span></p>
+            </td>
+            <td style="background-color:#deeaf6; border-bottom:2px solid #9cc2e5; border-left:none; border-right:2px solid #9cc2e5; border-top:none; vertical-align:top; width:302px;">
+                <p><span style="font-family: Calibri, sans-serif;">{ username: &apos;HESA&apos;, password:&apos;1234&apos; }</span></p>
+            </td>
+            <td style="background-color:#deeaf6; border-bottom:2px solid #9cc2e5; border-left:none; border-right:2px solid #9cc2e5; border-top:none; vertical-align:top; width:132px;">
+                <p><span style="font-family: Calibri, sans-serif;">Create a new user.</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom:2px solid #9cc2e5; border-left:2px solid #9cc2e5; border-right:2px solid #9cc2e5; border-top:none; vertical-align:top; width:104px;">
+                <p><span style="font-family: Calibri, sans-serif;"><strong>/authenticate</strong></span></p>
+            </td>
+            <td style="border-bottom:2px solid #9cc2e5; border-left:none; border-right:2px solid #9cc2e5; border-top:none; vertical-align:top; width:66px;">
+                <p><span style="font-family: Calibri, sans-serif;">POST</span></p>
+            </td>
+            <td style="border-bottom:2px solid #9cc2e5; border-left:none; border-right:2px solid #9cc2e5; border-top:none; vertical-align:top; width:302px;">
+                <p><span style="font-family: Calibri, sans-serif;">{ username: &apos;HESA&apos;, password:&apos;1234&apos; }</span></p>
+            </td>
+            <td style="border-bottom:2px solid #9cc2e5; border-left:none; border-right:2px solid #9cc2e5; border-top:none; vertical-align:top; width:132px;">
+                <p><span style="font-family: Calibri, sans-serif;">Generate a token.</span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+     
+
+<hr>
+
+# Models 
+
+
+## User
+
+| key          | type               
+| ------------ | -------------------        
+| email        | String                             
+| name         | String              
+| password     | String              
+| avatar       | String                                  
+| role         | Schema <Roles>                       
+           
+## Podcast
+
+| key          | type               
+| ------------ | -------------------
+| name        | String              
+| desc         | String              
+| cover_image     | String                      
+| episode_id   | String                       
+| notificationsId       | Boolean 
+| subscribtions_id       | String 
+| isdel       | Boolean 								  
+| roleId       | String   
+								  
+## Episode
+
+| key          | type               
+| ------------ | -------------------
+| podcastId        | String              
+| name         | String   
+| episodeId         | String    
+| date     | String              
+| title       | String   
+| desc       | String   
+| length       | String                        
+| musicId       | schema music             
+								  
+## Background_music
+
+| key          | type               
+| ------------ | -------------------        
+| musicId        | String                             
+| musicName         | String              
+| title     | String  							  
+           
+## Subscriptions
+
+| key          | type               
+| ------------ | -------------------        
+| podcastId        | String                             
+| subscriptionsId         | String              
+| date     | String              
+  
+
 
 
 

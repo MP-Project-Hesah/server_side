@@ -59,7 +59,7 @@
 ## Learn the concepts used in this project
 * [ Node.js Backend Architecture ](https://nodejs.org/en/docs/)
 * [Setup Basic Server](https://blog.vanila.io/setup-basic-server-with-express-framework-37b2ec749a6d)
-* [Implement JSON Web Token (JWT) Authentication using AccessToken and RefreshToken](https://afteracademy.com/blog/implement-json-web-token-jwt-authentication-using-access-token-and-refresh-token)
+* [Implement JSON Web Token (JWT) Authentication](https://afteracademy.com/blog/implement-json-web-token-jwt-authentication-using-access-token-and-refresh-token)
 * [Authentication vs Authorization](https://afteracademy.com/blog/authentication-vs-authorization)														       
 ## Development tools & Methodology
 - Trello

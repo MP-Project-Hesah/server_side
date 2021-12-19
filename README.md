@@ -7,7 +7,6 @@
   <hr>
   
 <div align="center">
-	<div>
     
 <br>
 <br>  
@@ -17,8 +16,7 @@
 				<img src="https://user-images.githubusercontent.com/92258765/146671698-9bf728b3-4fae-4a0e-9e93-f1e0ad3d1741.png"width="300" height="90>
 			</div>                                                                                                                                       
 <br>                                                                                                                                            
-<br>  
-<br>                                                                                                                                            
+                                                                                                                                         
                                                                                                                                             
 <a href="https://www.postman.com/company/press-media/">
 			<div>
@@ -44,24 +42,34 @@
 				<img src="https://user-images.githubusercontent.com/92258765/146671646-e7a650f6-179e-4650-bbd8-4925188de8db.png"width="350" height="130">
 			</div>
    
- <a href="https://www.postman.com/company/press-media/">
-			<div>
-				<img src="https://gotcharecruitment.co.uk/wp-content/uploads/2017/03/Trello-logo-blue.svg_.png"width="300" height="100">
-			</div>
+ <a href="https://trello.com/mpprojecthesah/home">
+<div>
+<img src="https://gotcharecruitment.co.uk/wp-content/uploads/2017/03/Trello-logo-blue.svg_.png"width="300" height="100">
+</div>
 
-
-  </div> </div>  
-                                                                                                                                             
-   <hr> 
+</div>
+</div>
+</div>
+                                                                                                                                            
+<hr> 
     
-  <br>
-                                                                                                                               
+<br>
+<hr>
+														       
+## Development tools & Methodology
+- Trello
+
+## Communication tools:
+- Slack
+## Installation:
+#### Start backend server
+														       
 # Routes
 
 ## Test Route
 This is the route that you can use to check if the API is running properly.                                                                                                        
                                                                                                                                
-### Home
+## Home
 
  **Returns a set of of podcasts and authors based on the categories selected by the user.**
 

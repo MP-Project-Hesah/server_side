@@ -55,14 +55,28 @@
     
 <br>
 <hr>
-														       
+
+## Learn the concepts used in this project
+* [ Node.js Backend Architecture ](https://nodejs.org/en/docs/)
+* [Setup Basic Server](https://blog.vanila.io/setup-basic-server-with-express-framework-37b2ec749a6d)
+* [Implement JSON Web Token (JWT) Authentication using AccessToken and RefreshToken](https://afteracademy.com/blog/implement-json-web-token-jwt-authentication-using-access-token-and-refresh-token)
+* [Authentication vs Authorization](https://afteracademy.com/blog/authentication-vs-authorization)														       
 ## Development tools & Methodology
 - Trello
-
+- Wireframe.cc
+- Creately														       
 ## Communication tools:
 - Slack
 ## Installation:
 #### Start backend server
+
+## Database:
+
+- MongoDB, with Mongoose API
+
+
+
+[Read More](https://docs.mongodb.com/drivers/node/current/)	
 														       
 # Routes
 
@@ -120,8 +134,67 @@ This is the route that you can use to check if the API is running properly.
                                                                                                          
                                                                                                                                
 ## Episodes
-## Category
-## 
+
+
+**Get all episodes**
+
+
+| ENDPOINT  | Method | Params | URL Params | Success Response                                                                                 | Error Response                                                                                                         |
+| --------- | ------ | ------ | ---------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| /episodes | `GET`  | -      | -          | **Code:** 200 - OK<br />**Content:** <br />`{`<br /> `episodes:` [[episodes](#episode)],<br />`}` | <br /> 404 NOT FOUND <br> **Content:** `{ error: <A Message with a description of the Error> }` |
+
+<br />
+
+
+**Get episode by id**
+
+| ENDPOINT  | Method | Params | URL Params | Success Response                                                                                 | Error Response                                                                                                         |
+| --------- | ------ | ------ | ---------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| /episode/{id} | `GET`  | -      | -          | **Code:** 200 - OK<br />**Content:** <br />`{`<br /> `episode:` [[Episode](#episode)],<br />`}` | <br /> 404 NOT FOUND <br> **Content:** `{ error: <A Message with a description of the Error> }` |
+
+<br />
+
+
+
+
+**create new episode**
+
+| ENDPOINT  | Method | Params | URL Params | Success Response                                                                                 | Error Response                                                                                                         |
+| --------- | ------ | ------ | ---------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| /podcasts/{id}/episodes | `POST`  | -      | -          | **Code:** 200 - OK<br />**Content:** <br />`{`<br /> `podcasts:` [[Episode](#episode)],<br />`}` | <br /> 404 NOT FOUND <br> **Content:** `{ error: <A Message with a description of the Error> }` |
+
+<br />
+
+**get new episode**
+| ENDPOINT  | Method | Params | URL Params | Success Response                                                                                 | Error Response                                                                                                         |
+| --------- | ------ | ------ | ---------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| /podcasts/{id}/episodes/new | `GET`  | -      | -          | **Code:** 200 - OK<br />**Content:** <br />`{`<br /> `podcasts:` [[Episode](#episode)],<br />`}` | <br /> 404 NOT FOUND <br> **Content:** `{ error: <A Message with a description of the Error> }` |
+
+<br />
+
+## Cover-image
+
+**update podcast cover-image**
+
+| ENDPOINT  | Method | Params | URL Params | Success Response                                                                                 | Error Response                                                                                                         |
+| --------- | ------ | ------ | ---------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| /podcasts/{id}/cover-image | `PUT`  | -      | -          | **Code:** 200 - OK **Content:** <br />`{`<br /> `podcasts:` [[Episode](#cover-image)],<br />`}` | <br /> 404 NOT FOUND <br> **Content:** `{ error: <A Message with a description of the Error> }` |
+
+<br />
+
+## Subscriptions
+
+**get all user subscriptions**
+
+| ENDPOINT  | Method | Params | URL Params | Success Response                                                                                 | Error Response                                                                                                         |
+| --------- | ------ | ------ | ---------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| /user/{id}/subscriptions | `GET`  | -      | -          | **Code:** 200 - OK<br />**Content:** <br />`{`<br /> `subscriptions:` [[Podcast](#subscriptions)],<br />`}` | <br /> 404 NOT FOUND <br> **Content:** `{ error: <A Message with a description of the Error> }` |
+
+<br />
+
+
+
+
                                                                                                                                
                                                                                                                                
                                                                                                                                

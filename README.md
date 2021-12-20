@@ -48,15 +48,19 @@
 </div>
 
 
+<div align="center">
+  <h1>  <hr></h1>
+ 
 
-                                                                                                                                              
- ## [**My Slides**](https://www.slides.com)
 
-## [**My Heorku** ](https://dashboard.heroku.com/)
+ ## Quick Links                                                                                                                                           
+ ### [**My Slides**](https://www.slides.com)
 
-## [**Clien side github**](https://github.com/MP-Project-Hesah/client_side)
+### [**My Heorku** ](https://dashboard.heroku.com/)
 
-## [**Trello**](https://trello.com/b/n9ol3PtC/frontendbackend)  
+### [**Clien side github**](https://github.com/MP-Project-Hesah/client_side)
+
+### [**Trello**](https://trello.com/b/n9ol3PtC/frontendbackend)  
 </div> 
 </div> 
 </div>																	
@@ -91,15 +95,15 @@ You can install all dependencies by running `npm install` in the project directo
 | Dependency                                           | Usage                                                              |
 | ---------------------------------------------------- | ------------------------------------------------------------------ |
 | [axios](https://npm.com/package/body-parser)   | POST body parsing middleware. Adds body object to incoming request |
-| [bcrypt](https://npmjs.com/package/compression) | Response compression middleware                                    |
+| [bcrypt](https://npmjs.com/package/compression) | bcrypt is a password-hashing function                                    |
 | [express](https://npmjs.com/package/express)         | Express REST API framework                                         |
 | [cors](https://npm.com/package/cors)                 | CORS middleware to set CORS policy                                 |
 | [morgan](https://npmjs.com/package/morgan)           | HTTP request logger                                                |
-| [mongoose](https://npmjs.com/package/winston)         | General purpose logger for the application                         |
-| [passport](https://npmjs.com/package/nyc)                 | Code Coverage tool                                                 |
-| [passport-jwt](https://npmjs.com/package/standard)       | Linting and styling tool.                                          |
-| [react-dom](https://npmjs.com/package/chai)               | Assertion Library                                                  |
-| [react-router-dom](https://npmjs.com/package/chai-http)     | Middleware for chai to test http endpoints                         |
+| [mongoose](https://npmjs.com/package/winston)         | provides a straight-forward, schema-based solution to model your application data.                        |
+| [passport](https://npmjs.com/package/nyc)                 | Passport is authentication middleware for Node.js.                                              |
+| [passport-jwt](https://npmjs.com/package/standard)       | This module lets you authenticate endpoints using a JSON web token.                                          |
+| [react-dom](https://npmjs.com/package/chai)               | React package for working with the DOM                                               |
+| [react-router-dom](https://npmjs.com/package/chai-http)     |     React package                     |
 
 <hr>
 														       
@@ -326,13 +330,6 @@ This is the route that you can use to check if the API is running properly.
 
 ![Untitled Workspace (21)](https://user-images.githubusercontent.com/92258765/146610610-86959abe-2bc8-4026-bca7-e57719899d60.jpg)
 
-
-
-<div align="center">
-  <h1> State UML Digram </h1>
-  </div>
-  
-![Untitled Workspace (13)](https://user-images.githubusercontent.com/92258765/146556069-05fdd93c-3891-4c74-b105-04a64947a65a.jpg)
 
 
 <div align="center">

@@ -144,7 +144,7 @@ This is the route that you can use to check if the API is running properly.
 | /podcasts | `GET`  | -      | -          | **Code:** 200 - OK<br />**Content:** <br />`{`<br /> `podcasts:` [[Podcast](#podcast)],<br />`}` | <br /> 404 NOT FOUND <br> **Content:** `{ error: <A Message with a description of the Error> }` |
 
 <br />
-
+ 
 **Get a single podcast**
 
 

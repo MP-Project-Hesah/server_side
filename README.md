@@ -330,6 +330,11 @@ This is the route that you can use to check if the API is running properly.
 
 ![Untitled Workspace (21)](https://user-images.githubusercontent.com/92258765/146610610-86959abe-2bc8-4026-bca7-e57719899d60.jpg)
 
+<div align="center">
+  <h1> UML Digram</h1>
+  </div>
+				      
+![Untitled Workspace (26)](https://user-images.githubusercontent.com/92258765/146703416-d7eef861-ecc9-47fd-bf41-c045136521c1.jpg)
 
 
 <div align="center">

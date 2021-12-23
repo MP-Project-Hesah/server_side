@@ -1,7 +1,7 @@
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
-const { User, validate } = require("../models/user");
+const { User, validate } = require("./../../db/models/user");
 
 module.exports = {
   login: async (req, res) => {

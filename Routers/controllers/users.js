@@ -4,8 +4,8 @@ const { dirname } = require("path");
 const { v4: uuidv4 } = require("uuid");
 const mongoose = require("mongoose");
 
-const { Profile } = require("../models/profile");
-const { User } = require("../models/user");
+const { Profile } = require("./../../db/models/profile");
+const { User } = require("./../../db/models/user");
 
 module.exports = {
   fetchMe: async (req, res) => {

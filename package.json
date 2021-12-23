@@ -1,0 +1,26 @@
+{
+  "name": "server_side",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">\r   <h1>Server Side</h1>\r <img width=\"664\" alt=\"بدون عنوان\" src=\"https://user-images.githubusercontent.com/92258765/146672418-e09151da-cf5b-4397-975e-aa39246cdf74.png\">\r   </div>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MP-Project-Hesah/server_side.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MP-Project-Hesah/server_side/issues"
+  },
+  "homepage": "https://github.com/MP-Project-Hesah/server_side#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongoose": "^6.1.3"
+  }
+}

@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/MP-Project-Hesah/server_side#readme",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "mongoose": "^6.1.3"
   }

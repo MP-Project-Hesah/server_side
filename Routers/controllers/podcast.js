@@ -11,11 +11,12 @@ module.exports = {
     //   Validate req body
     const { error } = validatePodcast(req.body);
     if (error)
+
       return res
         .status(400)
         .send({ success: false, message: error.details[0].message });
 
-    //validate userId
+    //   Validate userId
     if (!mongoose.Types.ObjectId.isValid(req.body.userId))
       return res
         .status(400)
@@ -68,7 +69,7 @@ module.exports = {
       ]),
     });
   },
-  //   Get All podcasts controller
+  //  Get All podcasts controller
   getAllPodcasts: async (req, res) => {
     try {
       let podcasts = await Podcast.find().select("-__v");
@@ -77,7 +78,7 @@ module.exports = {
       console.log(error.message);
     }
   },
-  //   Get one podcast controller
+    //   Get one podcast controller
   getOnePodcast: async (req, res) => {
     let { id } = req.params;
     try {

@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
   gender: {
     type: String,
     required: true,
-    unique: true,
+   
   },
   isAdmin: {
     type: Boolean,

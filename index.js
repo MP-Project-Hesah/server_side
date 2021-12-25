@@ -13,6 +13,7 @@ const users = require("./routers/routes/users");
 // const admin = require("./routes/admin");
 const podcast = require("./routers/routes/podcast");
 const subscriptions = require("./routers/routes/subscriptions");
+const comment = require("./routers/routes/comment");
 
 //Connect to mongodb
 mongoose
@@ -34,9 +35,8 @@ app.use("/api/auth", auth);
 app.use("/api/users", users);
 app.use("/api/podcasts", podcast);
 app.use("/api/subscriptions", subscriptions);
-
+app.use("/api/comment", comment);
 // app.use("/api/admin", admin);
-
 const port = process.env.PORT || 5050;
 app.listen(port, () => {
   console.log(`Listenning at port ${port}`);

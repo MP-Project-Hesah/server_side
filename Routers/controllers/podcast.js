@@ -12,7 +12,6 @@ module.exports = {
     //   Validate req body
     const { error } = validatePodcast(req.body);
     if (error)
-
       return res
         .status(400)
         .send({ success: false, message: error.details[0].message });

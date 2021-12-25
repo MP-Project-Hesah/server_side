@@ -1,5 +1,13 @@
 const router = require("express").Router();
-const { createPodcast, getAllPodcasts, getOnePodcast } = require("../controllers/podcast");
+const {
+  createPodcast,
+  getAllPodcasts,
+  getOnePodcast,
+  newEpisode,
+  searchPodcast,
+  searchPodcastByCategory,
+} = require("../controllers/podcast");
+
 
 const auth = require("../middleware/auth");
 

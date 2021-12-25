@@ -1,8 +1,8 @@
 const _ = require("lodash");
 const mongoose = require("mongoose");
 const { Podcast, validatePodcast } = require("./../../db/models/podcast");
-const { Subscription } = require("./../../models/subscriptions");
-const { User } = require("../models/user");
+const { Subscription } = require("./../../db/models/subscriptions");
+const { User } = require("./../../db/models/user");
 const { dirname } = require("path");
 const { v4: uuidv4 } = require("uuid");
 const Joi = require("joi");

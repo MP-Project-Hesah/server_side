@@ -11,6 +11,8 @@ const home = require("./routers/routes/home");
 const auth = require("./routers/routes/auth");
 const users = require("./routers/routes/users");
 // const admin = require("./routes/admin");
+const podcast = require("./routers/routes/podcast");
+const subscriptions = require("./routers/routes/subscriptions");
 
 //Connect to mongodb
 mongoose

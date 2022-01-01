@@ -1,192 +1,100 @@
-const _ = require("lodash");
-const mongoose = require("mongoose");
-const { Podcast, validatePodcast } = require("./../../db/models/podcast");
-const { User } = require("./../../db/models/user");
-const { Episode, validateEpisode } = require("./../../db/models/episode");
-const { dirname } = require("path");
-const { v4: uuidv4 } = require("uuid");
 
-module.exports = {
-  // Create podcast controller
-  createPodcast: async (req, res) => {
-    //   Validate req body
-    const { error } = validatePodcast(req.body);
-    if (error)
-      return res
-        .status(400)
-        .send({ success: false, message: error.details[0].message });
+/// CRUD on podcast 
 
-    //   Validate userId
-    if (!mongoose.Types.ObjectId.isValid(req.body.userId))
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid user id" });
+const podcastModel = require("../../db/models/podcast");
+const episodeModel = require('../../db/models/episode');
+const storageRef = require('../../helper/fb.storage');
 
-    const user = await User.findById(req.body.userId);
-    if (!user)
-      return res
-        .status(400)
-        .json({ success: false, message: "User does not exist" });
 
-    if (!req.body.photo && req.files === null) {
-      return res
-        .status(400)
-        .json({ success: false, message: "No podcast photo is selected" });
-    }
-
-    let photo = "";
-
-    if (req.body.photo) {
-      photo = req.body.photo;
-    } else {
-      const photoFile = req.files.photo;
-
-      let photo_id = uuidv4();
-      const appDir = dirname(require.main.filename);
-      photoFile.mv(
-        `${appDir}/public/uploads/${photo_id + "_" + photoFile.name}`
-      );
-
-      photo = `${photo_id + "_" + photoFile.name}`;
-    }
-
-    let podcast = new Podcast({
-      ..._.pick(req.body, ["name", "userId", "category", "description"]),
-      photo,
+const getPodcast = (req, res) => {
+  podcastModel
+    .find({ isDel: false })
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      res.status(200).json(err);
     });
-
-    await podcast.save();
-
-    res.send({
-      success: true,
-      podcast: _.pick(podcast, [
-        "_id",
-        "name",
-        "userId",
-        "category",
-        "description",
-        "photo",
-      ]),
-    });
-  },
-  //  Get All podcasts controller
-  getAllPodcasts: async (req, res) => {
-    try {
-      let podcasts = await Podcast.find().select("-__v");
-      res.send({ success: true, podcasts });
-    } catch (error) {
-      console.log(error.message);
-    }
-  },
-    //   Get one podcast controller
-  getOnePodcast: async (req, res) => {
-    let { id } = req.params;
-    try {
-
-      //validate id
-    if (!mongoose.Types.ObjectId.isValid(id))
-    return res
-      .status(400)
-      .json({ success: false, message: "Invalid podcast id" });
-
-      const podcast = await Podcast.findById(id).select("-__v");;
-      if (!podcast)
-        return res
-          .status(400)
-          .json({ success: false, message: "Podcast does not exist" });
-
-      res.send({ success: true, podcast });
-    } catch (error) {
-      console.log(error.message);
-    }
-  },
-// Create new Episode 
-  newEpisode: async (req, res) => {
-    try {
-      const { error } = validateEpisode(req.body);
-      if (error)
-        return res
-          .status(400)
-          .send({ success: false, message: error.details[0].message });
-
-      if (!mongoose.Types.ObjectId.isValid(req.body.podcastId))
-        return res
-          .status(400)
-          .json({ success: false, message: "Invalid podcast id" });
-
-      //check if user uploaded audio file
-      if (req.files === null)
-        return res
-          .status(400)
-          .json({ success: false, message: "No audio file is selected" });
-
-      const audioFile = req.files.audio;
-
-      let audio_id = uuidv4();
-      const appDir = dirname(require.main.filename);
-      audioFile.mv(
-        `${appDir}/public/uploads/${audio_id + "_" + audioFile.name}`
-      );
-
-      let audio = `${audio_id + "_" + audioFile.name}`;
-
-      let episode = new Episode({
-        ..._.pick(req.body, ["name", "podcastId", "title", "date"]),
-        audio,
-      });
-
-      await episode.save();
-
-      res.send({
-        success: true,
-        episode: _.pick(episode, [
-          "_id",
-          "name",
-          "podcastId",
-          "title",
-          "date",
-          "audio",
-        ]),
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  },
-  searchPodcast: async (req, res) => {
-    const { query } = req.query;
-    try {
-      let results = await Podcast.find().select("-__v");
-
-      if (query === undefined || query === "")
-        return res.send({ success: true, podcasts: results });
-
-      let podcasts = [];
-
-      podcasts = results.filter(
-        (result) =>
-          result.name.toLowerCase().includes(query.toLowerCase()) ||
-          result.description.toLowerCase().includes(query.toLowerCase())
-      );
-
-      res.send({ success: true, podcasts });
-    } catch (error) {
-      console.log(error.message);
-    }
-  },
-  searchPodcastByCategory: async (req, res) => {
-    try {
-      const { category } = req.params;
-
-      let results = await Podcast.find().select("-__v");
-      let podcasts = [];
-
-      podcasts = results.filter(
-        (result) => result.category.toLowerCase() === category.toLowerCase()
-      );
-
-      res.send({ success: true, podcasts });
-    } catch (error) {
-      console.log(error.message);
-    }
-  },
 };
+const getYourPodcast = (req, res) => {
+  podcastModel
+    .find({ isDel: false, userId: req.token.id })
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      res.status(200).json(err);
+    });
+}
+///  Create Podcast 
+const createPodcast = async (req, res) => {
+  let photo = ""
+  if (req.file) {
+    photo = await uploadImage(req.file);
+  }
+  const { name, description, category } = req.body;
+  if (!name || !description || !category) {
+    return res.status(400).json("Something Missing!");
+  }
+  const newPodcast = new podcastModel({ name, description, photo, category, userId: req.token.id });
+  newPodcast
+    .save()
+    .then((result) => {
+      res.status(201).json(result);
+    })
+    .catch((err) => {
+      res.status(403).json(err);
+    });
+};
+const updatePodCast = async (req, res) => {
+  let body = {};
+  let photo = ""
+  if (req.file) {
+    photo = await uploadImage(req.file);
+    body.photo = photo;
+  }
+  const { name, description, category } = req.body;
+  if (!name || !description || !category) {
+    return res.status(400).json("Something Missing!");
+  }
+  body.name = name;
+  body.description = description;
+  body.category = category;
+  podcastModel.findOneAndUpdate({ _id: req.params.id }, { $set: { ...body } }).then((result) => {
+    res.status(200).json("Podcast updated!")
+  }).catch((err) => {
+    res.status(403).json(err);
+  })
+}
+const deletePodcast = (req, res) => {
+  const { id } = req.params;
+  podcastModel.findOne({ _id: id, isDel: true }).then((result) => {
+    if (result) {
+      res.status(404).json("Podcast Already Deleted!");
+    } else {
+      podcastModel.updateOne({ _id: id }, { isDel: true }).then(() => {
+        episodeModel.updateOne({ podcast: id }, { isDel: true }).then(() => {
+          res.status(200).json("Podcast Deleted!")
+        })
+      })
+    }
+  }).catch((err) => {
+    res.status(403).json(err);
+  })
+}
+const uploadImage = async (file) => {
+  const imageBuffer = new Uint8Array(file.buffer);
+  file = storageRef.file('photos/' + file.originalname);
+
+  await file.save(
+    imageBuffer,
+    { resumable: false, metadata: { contentType: file.mimetype } },
+  );
+  file = await file.getSignedUrl({
+    action: 'read',
+    expires: '12-31-2030'
+  })
+  return file[0];
+}
+
+module.exports = { createPodcast, deletePodcast, getPodcast, updatePodCast,getYourPodcast };

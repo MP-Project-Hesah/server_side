@@ -1,56 +1,53 @@
-const _ = require("lodash");
-const mongoose = require("mongoose");
-const { Podcast, validatePodcast } = require("./../../db/models/podcast");
-const { Comment, validateComment } = require("./../../db/models/comment");
-const { User } = require("./../../db/models/user");
-const { v4: uuidv4 } = require("uuid");
+const commentModel = require("../../db/models/comment");
+
+/////Comment controller
+
+const createComment = (req, res) => {
+  const { id } = req.params;
+
+  const { comment } = req.body;
+
+  const newComment = new commentModel({
+    comment,
+    user: req.token.id,
+    post: id,
+  });
+  newComment
+    .save()
+    .then((result) => {
+      postModel.findByIdAndUpdate(id, { $push: { comment: result._id } }).then(() => {
+        res.status(201).json("created comment");
+      });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
+const deleteComment = (req, res) => {
+  const { id } = req.params;
+  const { user } = req.body;
+  if (req.token.id == user || req.token.role == "admin") {
+    commentModel
+      .findByIdAndUpdate(id, { $set: { isDeleted: true } })
+      .then((result) => {
+        if (result) {
+          res.status(200).json("comment removed");
+        } else {
+          res.status(404).json("comment does not exist");
+        }
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } else {
+    res.status(200).json("You don't have privileges to remove this comment");
+  }
+};
+
 
 
 module.exports = {
-  // Comment controller
-  comment: async (req, res) => {
-    //   Validate req body
-    const { error } = validateComment(req.body);
-    if (error)
-      return res
-        .status(400)
-        .send({ success: false, message: error.details[0].message });
-
-    //validate userId
-    if (!mongoose.Types.ObjectId.isValid(req.body.userId))
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid user id" });
-
-    //validate podcastId
-    if (!mongoose.Types.ObjectId.isValid(req.body.podcastId))
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid podcast id" });
-
-    //check if user exists
-    const user = await User.findById(req.body.userId);
-    if (!user)
-      return res
-        .status(400)
-        .json({ success: false, message: "User does not exist" });
-
-    // Check if podcast exists
-    const podcast = await Podcast.findById(req.body.podcastId);
-    if (!podcast)
-      return res
-        .status(400)
-        .json({ success: false, message: "Podcast does not exist" });
-
-    let comment = new Comment({
-      ..._.pick(req.body, ["userId", "podcastId", "desc", "date"]),
-    });
-
-    await comment.save();
-
-    res.send({
-      success: true,
-      message: "Comment successfull",
-    });
-  },
+  createComment,
+  deleteComment,
 };

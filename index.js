@@ -1,43 +1,38 @@
-require('dotenv').config()
 const express = require("express");
+require("dotenv").config();
 const cors = require("cors");
-const fileUpload = require("express-fileupload");
-const mongoose = require("mongoose");
+const {initializeApp,cert} = require('firebase-admin/app');
+const serviceAccount = require('./config/serviceAccountKey.json');
+
+require("./db");
+initializeApp({
+  credential: cert(serviceAccount) // change with your service account key 
+});
 
 const app = express();
-
-// Import routes
-const home = require("./routers/routes/home");
-const auth = require("./routers/routes/auth");
-const users = require("./routers/routes/users");
-// const admin = require("./routes/admin");
-const podcast = require("./routers/routes/podcast");
-const subscriptions = require("./routers/routes/subscriptions");
-const comment = require("./routers/routes/comment");
-
-//Connect to mongodb
-mongoose
-  .connect(process.env.db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Connected to MongoDB..."));
-
-// Middlewares
-app.use(cors());
-app.use(fileUpload());
 app.use(express.json());
-app.use("/static", express.static("public"));
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
-// Routes
-app.use("/", home);
-app.use("/api/auth", auth);
-app.use("/api/users", users);
-app.use("/api/podcasts", podcast);
-app.use("/api/subscriptions", subscriptions);
-app.use("/api/comment", comment);
-// app.use("/api/admin", admin);
-const port = process.env.PORT || 5050;
-app.listen(port, () => {
-  console.log(`Listenning at port ${port}`);
+const roleRouter = require('./routers/routes/role');
+const userRouter = require("./routers/routes/user");
+const podcastRouter = require("./routers/routes/podcast");
+const episodeRouter = require("./routers/routes/episode");
+const commentRouter = require("./routers/routes/comment");
+const subscriptionRouter = require("./routers/routes/subscriptions");
+
+
+
+app.use(roleRouter);
+app.use(userRouter);
+app.use(podcastRouter);
+app.use(episodeRouter);
+app.use(commentRouter);
+app.use(subscriptionRouter);
+
+
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`server running at port ${PORT}`);
 });

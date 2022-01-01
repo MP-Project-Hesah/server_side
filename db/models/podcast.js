@@ -1,38 +1,40 @@
 const mongoose = require("mongoose");
-
+//podcast model 
 const podcastSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    minlength: 6,
-    maxlength: 1024,
   },
-  photo: {
+  userId: {
     type: String,
     required: true,
-    minlength: 6,
-    maxlength: 1024,
+    ref: "User"
+  },
+  episode: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Episode"
+  }],
+  comment: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Comment"
+  }],
+  photo: {
+    type: String,
+    // required: false,
   },
   category: {
     type: String,
     required: true,
-    minlength: 6,
-    maxlength: 1024,
+    lowercase: true
   },
   description: {
     type: String,
     required: true,
-    minlength: 6,
-    maxlength: 1024,
+    lowercase: true
   },
   isDel: {
     type: Boolean,
     default: false,
   },
 });
-
-const Podcast = mongoose.model("Podcast", podcastSchema);
-
-module.exports = {
-  Podcast,
-};
+module.exports = mongoose.model("Podcast", podcastSchema);

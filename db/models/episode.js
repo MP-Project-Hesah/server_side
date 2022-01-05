@@ -2,21 +2,16 @@ const mongoose = require("mongoose");
 const episodeSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    // minlength: 6,
-    // maxlength: 1024,
+    required: true
   },
-  title: {
+  description: {
     type: String,
     required: true,
-    minlength: 6,
-    maxlength: 1024
   },
   date: {
     type: Date,
     required: true,
-    minlength: 6,
-    maxlength: 1024,
+    default: new Date().toISOString()
   },
   url: {
     type: String,
@@ -33,3 +28,4 @@ const episodeSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Episode", episodeSchema);
+

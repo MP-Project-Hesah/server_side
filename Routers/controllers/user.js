@@ -11,7 +11,7 @@ const getUsers = (req, res) => {
       res.status(200).json(result);
     })
     .catch((err) => {
-      res.status(400).json(err);
+      res.status(403).json(err);
     });
 };
 
@@ -53,7 +53,7 @@ const register = async (req, res) => {
       res.status(201).json(result);
     })
     .catch((err) => {
-      res.status(200).json(err);
+      res.status(403).json(err);
     });
 };
 
@@ -72,7 +72,10 @@ const login = (req, res) => {
         console.log(result);
         if (savedEmail === result.email || username === result.username) {
           const payload = {
-            id: result._id,
+            id:result.id,
+            name: result.name,
+            username:result.usernam,
+            email: result.email,
             role: result.role,
           };
           const options = {
@@ -85,20 +88,19 @@ const login = (req, res) => {
           );
           if (unhashPassword) {
             console.log("here");
-            res.status(200).json({ result, token });
+            res.status(200).json({ token });
           } else {
-            res.status(200).json("invalid email or password");
+            res.status(400).json("invalid email or password");
           }
         } else {
-          res.status(200).json("invalid email or password");
+          res.status(400).json("invalid email or password");
         }
       } else {
-        res.status(200).json("email does not exist");
+        res.status(400).json("email does not exist");
       }
     })
     .catch((err) => {
-      res.status(200).json(err);
+      res.status(403).json(err);
     });
 };
 module.exports = { register, login, getUsers, removeUser };
-

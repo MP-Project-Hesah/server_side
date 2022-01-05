@@ -7,7 +7,9 @@ const options = {
   useUnifiedTopology: true,
 };
 
-
-mongoose.connect(`mongodb://localhost:27017/${DB}`, options).then(() => {
+let liveDB = `mongodb+srv://xufyandb:xufyandb@cluster0-j88e0.mongodb.net/${DB}?retryWrites=true&w=majority`;
+let localDB = `mongodb://localhost:27017/${DB}`;
+let database = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? localDB : liveDB;
+mongoose.connect(database, options).then(() => {
   console.log("DB is connected!");
 });

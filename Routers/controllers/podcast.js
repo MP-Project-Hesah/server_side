@@ -1,4 +1,5 @@
 
+
 /// CRUD on podcast 
 
 const podcastModel = require("../../db/models/podcast");
@@ -9,6 +10,7 @@ const storageRef = require('../../helper/fb.storage');
 const getPodcast = (req, res) => {
   podcastModel
     .find({ isDel: false })
+    .populate('userId')
     .then((result) => {
       res.status(200).send(result);
     })
@@ -19,6 +21,20 @@ const getPodcast = (req, res) => {
 const getYourPodcast = (req, res) => {
   podcastModel
     .find({ isDel: false, userId: req.token.id })
+    .populate({ path: 'episode', match: { isDel: false } })
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      res.status(200).json(err);
+    });
+}
+const getPodCastById = (req, res) => {
+  const { id } = req.params;
+  podcastModel
+    .findOne({ isDel: false, _id: id })
+    .populate({ path: 'episode', match: { isDel: false }, options: { sort: { 'date': -1 } } })
+    .populate({ path: 'comment', match: { isDel: false }, options: { sort: { 'date': -1 } }, populate: { path: 'userId' } })
     .then((result) => {
       res.status(200).send(result);
     })
@@ -97,4 +113,4 @@ const uploadImage = async (file) => {
   return file[0];
 }
 
-module.exports = { createPodcast, deletePodcast, getPodcast, updatePodCast,getYourPodcast };
+module.exports = { createPodcast, deletePodcast, getPodcast, updatePodCast, getYourPodcast, getPodCastById };

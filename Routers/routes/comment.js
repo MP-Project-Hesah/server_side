@@ -11,4 +11,4 @@ commentRouter.post("/comment/:id", authentication, createComment);
 // commentRouter.put("/comment/:id", authentication, updateComment);
 commentRouter.delete("/comment/:id", authentication, deleteComment);
 
-module.exports = commentRouter
+module.exports = commentRouter;

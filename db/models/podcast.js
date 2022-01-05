@@ -36,5 +36,10 @@ const podcastSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  date: {
+    type: Date,
+    required: true,
+    default: new Date().toISOString()
+  }
 });
 module.exports = mongoose.model("Podcast", podcastSchema);

@@ -1,16 +1,18 @@
 const commentModel = require("../../db/models/comment");
-
+const postModel = require('../../db/models/podcast');
 /////Comment controller
 
 const createComment = (req, res) => {
   const { id } = req.params;
 
   const { comment } = req.body;
-
+  if (!comment) {
+    return res.status(400).json("Please add comment!");
+  }
   const newComment = new commentModel({
     comment,
-    user: req.token.id,
-    post: id,
+    userId: req.token.id,
+    podcastId: id
   });
   newComment
     .save()
@@ -27,9 +29,10 @@ const createComment = (req, res) => {
 const deleteComment = (req, res) => {
   const { id } = req.params;
   const { user } = req.body;
+  console.log(req.token);
   if (req.token.id == user || req.token.role == "admin") {
     commentModel
-      .findByIdAndUpdate(id, { $set: { isDeleted: true } })
+      .findByIdAndUpdate(id, { $set: { isDel: true } })
       .then((result) => {
         if (result) {
           res.status(200).json("comment removed");
@@ -41,7 +44,7 @@ const deleteComment = (req, res) => {
         res.status(400).json(err);
       });
   } else {
-    res.status(200).json("You don't have privileges to remove this comment");
+    res.status(403).json("You don't have privileges to remove this comment");
   }
 };
 

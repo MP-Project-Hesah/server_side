@@ -8,11 +8,11 @@ const addEpisode = async (req, res) => {
     if (req.file) {
         audio = await uploadAudio(req.file);
     }
-    const { name, title, date } = req.body;
-    if (!name || !title || !date) {
+    const { name, description } = req.body;
+    if (!name || !description) {
         return res.status(400).json("Something missing!");
     }
-    const newEpisode = new episodeModel({ name, title, date, podcast: id, url: audio });
+    const newEpisode = new episodeModel({ name, description, podcast: id, url: audio });
     newEpisode.save().then((result) => {
         podcastModel.findByIdAndUpdate(id, { $push: { episode: result._id } }).then(() => {
             res.status(200).json('Episode Added!');

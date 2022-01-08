@@ -7,9 +7,12 @@ const options = {
   useUnifiedTopology: true,
 };
 
-let liveDB = `mongodb+srv://xufyandb:xufyandb@cluster0-j88e0.mongodb.net/${DB}?retryWrites=true&w=majority`;
-let localDB = `mongodb://localhost:27017/${DB}`;
-let database = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? localDB : liveDB;
-mongoose.connect(database, options).then(() => {
-  console.log("DB is connected!");
-});
+
+mongoose.connect(`mongodb://localhost/podcasterr`, options).then(
+  () => {
+    console.log("DB Ready To Use");
+  },
+  (err) => {
+    console.log(err.message);
+  }
+);

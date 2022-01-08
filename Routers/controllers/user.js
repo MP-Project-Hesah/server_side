@@ -1,5 +1,8 @@
 const userModel = require("./../../db/models/user");
+const roleModel = require('./../../db/models/role');
+const storageRef = require('../../helper/fb.storage');
 const bcrypt = require("bcrypt");
+const SECRET_KEY = process.env.SECRET_KEY;
 var jwt = require("jsonwebtoken");
 
 
@@ -34,17 +37,21 @@ const removeUser = (req, res) => {
 };
 
 const register = async (req, res) => {
+
   const { username, email, password, gender, name } = req.body;
 
   const Salt = Number(process.env.SALT);
   const savedEmail = email.toLowerCase();
   const hashedPassword = await bcrypt.hash(password, Salt);
+  const rolesresult = await new roleModel({ role: 'user' }).save()
+  console.log(rolesresult);
   const newUser = new userModel({
     username,
     email: savedEmail,
     password: hashedPassword,
     gender,
-    name
+    name,
+    role: rolesresult._id
   });
 
   newUser
@@ -59,7 +66,6 @@ const register = async (req, res) => {
 
 const login = (req, res) => {
   const { username, email, password } = req.body;
-  const SECRET_KEY = process.env.SECRET_KEY;
   const savedEmail = email?.toLowerCase();
   userModel
     .findOne({
@@ -67,16 +73,21 @@ const login = (req, res) => {
         { email: savedEmail },
         { username }
       ]
-    }).then(async (result) => {
+    }).populate('role').lean().then(async (result) => {
+      console.log(result.role);
       if (result) {
-        console.log(result);
         if (savedEmail === result.email || username === result.username) {
           const payload = {
-            id:result.id,
+            id: result._id,
             name: result.name,
-            username:result.usernam,
+            username: result.usernam,
             email: result.email,
-            role: result.role,
+            profession: result.profession,
+            bio: result.bio,
+            DOB: result["DOB"],
+            facebook: result.facebook,
+            avatar: result.avatar,
+            role: result.role.role,
           };
           const options = {
             expiresIn: 60 * 60,
@@ -87,8 +98,7 @@ const login = (req, res) => {
             result.password
           );
           if (unhashPassword) {
-            console.log("here");
-            res.status(200).json({ token });
+            res.status(200).json({ token, payload });
           } else {
             res.status(400).json("invalid email or password");
           }
@@ -103,4 +113,60 @@ const login = (req, res) => {
       res.status(403).json(err);
     });
 };
-module.exports = { register, login, getUsers, removeUser };
+const update = async (req, res) => {
+  const userId = req.token.id;
+  let avatar = ""
+  if (req.file) {
+    avatar = await uploadAvatar(req.file);
+  }
+  const { name, profession, DOB, bio, facebook } = req.body;
+  if (!name && !profession && !DOB && bio) {
+    return res.status(400).json("Something Missing!");
+  }
+  let body = {
+    name,
+    profession,
+    DOB,
+    bio,
+    facebook
+  }
+  if (avatar != "") {
+    body.avatar = avatar;
+  }
+  userModel.findOneAndUpdate({ _id: userId }, { $set: body }, { new: true }).populate('role').then(result => {
+    const payload = {
+      id: result._id,
+      name: result.name,
+      username: result.usernam,
+      email: result.email,
+      profession: result.profession,
+      bio: result.bio,
+      DOB: result.DOB,
+      facebook: result.facebook,
+      avatar: result.avatar,
+      role: result.role.role || 'user',
+    };
+    const options = {
+      expiresIn: 60 * 60,
+    };
+    const token = jwt.sign(payload, SECRET_KEY, options);
+    res.status(200).json({ message: "Profile updated!", token });
+  }).catch(err => {
+    res.status(403).json(err);
+  })
+}
+const uploadAvatar = async (file) => {
+  const imageBuffer = new Uint8Array(file.buffer);
+  file = storageRef.file('users/' + file.originalname);
+
+  await file.save(
+    imageBuffer,
+    { resumable: false, metadata: { contentType: file.mimetype } },
+  );
+  file = await file.getSignedUrl({
+    action: 'read',
+    expires: '12-31-2030'
+  })
+  return file[0];
+}
+module.exports = { register, login, getUsers, removeUser, update };

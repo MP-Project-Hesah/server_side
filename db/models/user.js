@@ -9,6 +9,12 @@ const user = new mongoose.Schema({
     type: String,
     required: true,
   },
+  profession: {
+    type: String,
+  },
+  DOB: {
+    type: String,
+  },
   email: {
     type: String,
     required: true,
@@ -42,6 +48,9 @@ const user = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  facebook: {
+    type: String
+  }
 });
 
 module.exports = mongoose.model("User", user);

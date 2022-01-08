@@ -7,6 +7,17 @@ const episodeModel = require('../../db/models/episode');
 const storageRef = require('../../helper/fb.storage');
 
 
+const AdminGetPodcast = (req, res) => {
+  const { limit, page } = req.body;
+  podcastModel
+    .paginate({ isDel: false }, { page, limit, populate: 'userId', })
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      res.status(200).json(err);
+    });
+};
 const getPodcast = (req, res) => {
   podcastModel
     .find({ isDel: false })
@@ -113,4 +124,4 @@ const uploadImage = async (file) => {
   return file[0];
 }
 
-module.exports = { createPodcast, deletePodcast, getPodcast, updatePodCast, getYourPodcast, getPodCastById };
+module.exports = { createPodcast, deletePodcast, getPodcast, updatePodCast, getYourPodcast, getPodCastById ,AdminGetPodcast};

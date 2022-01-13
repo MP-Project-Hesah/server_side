@@ -20,6 +20,8 @@ const podcastRouter = require("./routers/routes/podcast");
 const episodeRouter = require("./routers/routes/episode");
 const commentRouter = require("./routers/routes/comment");
 const subscriptionRouter = require("./routers/routes/subscriptions");
+const statisticsRouter = require("./routers/routes/statistics");
+
 
 
 
@@ -29,6 +31,7 @@ app.use(podcastRouter);
 app.use(episodeRouter);
 app.use(commentRouter);
 app.use(subscriptionRouter);
+app.use(statisticsRouter);
 
 
 

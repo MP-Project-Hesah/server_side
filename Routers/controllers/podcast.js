@@ -4,6 +4,8 @@
 
 const podcastModel = require("../../db/models/podcast");
 const episodeModel = require('../../db/models/episode');
+const viewModel = require('../../db/models/views');
+
 const storageRef = require('../../helper/fb.storage');
 
 
@@ -18,14 +20,14 @@ const AdminGetPodcast = (req, res) => {
       res.status(200).json(err);
     });
 };
+
 const getPodcast = (req, res) => {
   podcastModel
     .find({ isDel: false })
     .populate('userId')
     .then((result) => {
-      res.status(200).send(result);
-    })
-    .catch((err) => {
+      res.status(200).json(result);
+    }).catch((err) => {
       res.status(200).json(err);
     });
 };
@@ -109,6 +111,24 @@ const deletePodcast = (req, res) => {
     res.status(403).json(err);
   })
 }
+const podcastView = (req, res) => {
+  const { id } = req.params;
+  const userId = req.token.id;
+  podcastModel.findOne({ _id: id, isDel: false, userId }).then((result) => {
+    if (result) {
+      res.status(200).json("user view the podcast!")
+    } else {
+      const newView = new viewModel({ podcastId: id, userId });
+      newView.save().then((result) => {
+        res.status(200).json("user view the podcast!")
+      }).catch((err) => {
+        res.status(403).json(err);
+      })
+    }
+  }).catch((err) => {
+    res.status(403).json(err);
+  })
+}
 const uploadImage = async (file) => {
   const imageBuffer = new Uint8Array(file.buffer);
   file = storageRef.file('photos/' + file.originalname);
@@ -124,4 +144,4 @@ const uploadImage = async (file) => {
   return file[0];
 }
 
-module.exports = { createPodcast, deletePodcast, getPodcast, updatePodCast, getYourPodcast, getPodCastById ,AdminGetPodcast};
+module.exports = { createPodcast, deletePodcast, getPodcast, updatePodCast, getYourPodcast, getPodCastById, AdminGetPodcast, podcastView };

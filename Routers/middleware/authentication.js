@@ -16,7 +16,7 @@ const authentication = (req, res, next) => {
     req.token = parsedToken;
     next();
   } catch (err) {
-    res.status(403).json("Unauthorized user!");
+    res.status(401).json("Unauthorized user!");
   }
 };
 

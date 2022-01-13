@@ -5,10 +5,10 @@ const roleModel = require("./../../db/models/role");
 const authorization = async(req, res, next) => {
     try {
         const roleID = req.token.role;
-        const result = await roleModel.findById(roleID);
-        if(result.role === "admin"){
+        const result = await roleModel.findOne({ role: roleID });
+        if (result && result.role === "admin") {
             next();
-        }else{
+        } else {
             res.status(403).json("forbidden")
         }
     } catch (err) {

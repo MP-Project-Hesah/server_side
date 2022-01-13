@@ -74,7 +74,6 @@ const login = (req, res) => {
         { username }
       ]
     }).populate('role').lean().then(async (result) => {
-      console.log(result.role);
       if (result) {
         if (savedEmail === result.email || username === result.username) {
           const payload = {
@@ -110,7 +109,7 @@ const login = (req, res) => {
       }
     })
     .catch((err) => {
-      res.status(403).json(err);
+      res.status(403).json('Unknown error!');
     });
 };
 const update = async (req, res) => {

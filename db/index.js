@@ -8,7 +8,7 @@ const options = {
 };
 
 
-mongoose.connect(`mongodb://localhost/podcasterr`, options).then(
+mongoose.connect(`mongodb://localhost:27017/${DB}`, options).then(
   () => {
     console.log("DB Ready To Use");
   },

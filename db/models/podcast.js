@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const mongoosePaginate = require('mongoose-paginate-v2');
+
 //podcast model 
 const podcastSchema = new mongoose.Schema({
   name: {
@@ -41,6 +42,7 @@ const podcastSchema = new mongoose.Schema({
     type: Date,
     required: true,
     default: new Date().toISOString()
-  }});
-  podcastSchema.plugin(mongoosePaginate);
-  module.exports = mongoose.model("Podcast", podcastSchema);
+  }
+});
+podcastSchema.plugin(mongoosePaginate);
+module.exports = mongoose.model("Podcast", podcastSchema);

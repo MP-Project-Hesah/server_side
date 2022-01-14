@@ -19,7 +19,7 @@ const uploaderObject = {
             }
             callback(null, true)
         },
-    })
+    }) 
 }
 
 module.exports = uploaderObject;

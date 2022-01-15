@@ -1,16 +1,27 @@
 const mongoose = require("mongoose");
 
 const subscriptionSchema = new mongoose.Schema({
-  podcastId: {
-    type: String,
+  podcast: {
+    type: mongoose.Types.ObjectId,
     required: true,
-    minlength: 6,
-    maxlength: 50,
+    ref: "Podcast"
   },
+  userId: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+    ref: "User"
+  },
+  isDel: {
+    type: Boolean,
+    default: false
+  },
+  date: {
+    type: Date,
+    required: true,
+    default: new Date().toISOString()
+  }
 });
 
-const Subscription = mongoose.model("Subscription", subscriptionSchema);
+module.exports = mongoose.model("Subscription", subscriptionSchema);
 
-module.exports = {
-  Subscription,
-};
+

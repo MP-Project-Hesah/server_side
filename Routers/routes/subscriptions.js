@@ -1,9 +1,15 @@
-const router = require("express").Router();
-const { unSubscribe, subscribe } = require("../controllers/subscriptions");
+const express = require("express");
+const {
+    subscribe,
+    UnSubscribe,
+    getSubscribeList
+} = require("./../controllers/subscription");
+const authentication = require("../middleware/authentication");
 
-const auth = require("../middleware/auth");
+const subscriptionRouter = express.Router();
 
-router.post("/subscribe", auth, subscribe);
-router.post("/unsubscribe", auth, unSubscribe);
+subscriptionRouter.get("/subscribe/list", authentication, getSubscribeList);
+subscriptionRouter.get("/subscribe/:id", authentication, subscribe);
+subscriptionRouter.get("/unsubscribe/:id", authentication, UnSubscribe);
 
-module.exports = router;
+module.exports = subscriptionRouter;

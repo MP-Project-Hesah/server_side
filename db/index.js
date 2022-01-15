@@ -1,17 +1,18 @@
-// const mongoose = require('mongoose')
-// const dotenv = require("dotenv");
-// dotenv.config();
+const mongoose = require('mongoose');
+const { db } = require('./models/podcast');
+require('dotenv').config()
+const DB = process.env.DB;
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
 
-// const options = {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// };
-// const DB = process.env.DB;
-// mongoose.connect(`mongodb://localhost:27017/${DB}`, options).then(
-//   () => {
-//     console.log("DB Ready To Use");
-//   },
-//   (err) => {
-//     console.log(err);
-//   }
-// );
+
+mongoose.connect(`mongodb://localhost:27017/${DB}`, options).then(
+  () => {
+    console.log("DB Ready To Use");
+  },
+  (err) => {
+    console.log(err.message);
+  }
+);

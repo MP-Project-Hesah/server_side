@@ -1,38 +1,31 @@
 const mongoose = require("mongoose");
-
 const episodeSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    minlength: 6,
-    maxlength: 1024,
+    required: true
   },
-  podcaseId: {
+  description: {
     type: String,
     required: true,
-    minlength: 6,
-    maxlength: 1024,
-  },
-  title: {
-    type: String,
-    required: true,
-    minlength: 6,
-    maxlength: 1024,
   },
   date: {
     type: Date,
     required: true,
-    minlength: 6,
-    maxlength: 1024,
+    default: new Date().toISOString()
+  },
+  url: {
+    type: String,
   },
   isDel: {
     type: Boolean,
     default: false,
   },
+  podcast: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+    ref: "Podcast"
+  }
 });
 
-const Episode = mongoose.model("Episode", episodeSchema);
+module.exports = mongoose.model("Episode", episodeSchema);
 
-module.exports = {
-  Episode,
-};
